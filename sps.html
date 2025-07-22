@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone Paper Scissors</title>
+    <link rel="stylesheet" href="sps-style.css">
+</head>
+<body>
+    <h1>Stone Paper Scissors</h1>
+
+    <div class="mode-selection">
+        <h2>Choose Game Mode:</h2>
+        <button id="mode-computer" class="mode-button active">Player vs. Computer</button>
+        <button id="mode-player" class="mode-button">Player vs. Player</button>
+    </div>
+
+    <div class="player-names">
+        <div class="name-input">
+            <label for="player1-name">Player 1 Name:</label>
+            <input type="text" id="player1-name" value="Player 1" maxlength="12">
+        </div>
+        <div class="name-input player2-name-input" style="display: none;">
+            <label for="player2-name">Player 2 Name:</label>
+            <input type="text" id="player2-name" value="Player 2" maxlength="12">
+        </div>
+    </div>
+
+    <div class="game-options">
+        <label for="max-points">Play to:</label>
+        <select id="max-points">
+            <option value="3">3 Points</option>
+            <option value="5" selected>5 Points</option>
+            <option value="7">7 Points</option>
+            <option value="10">10 Points</option>
+        </select>
+    </div>
+
+    <div class="score-board">
+        <div class="score">
+            <p id="player1-label">Player 1</p>
+            <span id="player1-score">0</span>
+        </div>
+        <div class="score">
+            <p id="opponent-label">Computer</p>
+            <span id="player2-score">0</span>
+        </div>
+    </div>
+
+    <div class="choices-container">
+        <div class="player-choices" id="player1-choices">
+            <h2 id="player1-turn-label">Player 1's Turn</h2>
+            <button class="choice-button" data-player="1" data-choice="stone">🪨 Stone</button>
+            <button class="choice-button" data-player="1" data-choice="paper">📄 Paper</button>
+            <button class="choice-button" data-player="1" data-choice="scissors">✂️ Scissors</button>
+        </div>
+
+        <div class="player-choices" id="player2-choices" style="display: none;">
+            <h2 id="player2-turn-label">Player 2's Turn</h2>
+            <button class="choice-button" data-player="2" data-choice="stone">🪨 Stone</button>
+            <button class="choice-button" data-player="2" data-choice="paper">📄 Paper</button>
+            <button class="choice-button" data-player="2" data-choice="scissors">✂️ Scissors</button>
+        </div>
+    </div>
+
+    <div class="display-area">
+        <div class="display-choice player-display">
+            <h2 id="player1-choice-label">Player 1 Chose:</h2>
+            <span id="player1-choice-display" class="choice-icon">?</span>
+        </div>
+        <div class="display-choice player2-display">
+            <h2 id="player2-choice-label">Computer Chose:</h2>
+            <span id="player2-choice-display" class="choice-icon">?</span>
+        </div>
+    </div>
+
+    <p id="round-result-message"></p>
+    <p id="game-winner-message"></p>
+
+    <div class="game-controls">
+        <button id="reset-button">Reset Game</button>
+        <button id="play-again-button" style="display: none;">Play Again</button>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="sps-script.js"></script>
+</body>
+</html>
