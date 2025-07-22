@@ -1,0 +1,366 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the start, letting space distribute */
+    min-height: 100vh; /* Takes full viewport height */
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    margin: 0;
+    overflow: hidden; /* No scrolling */
+    position: relative; /* Crucial for absolute positioning of children */
+    padding: 10px 0; /* Reduced padding to gain space */
+    box-sizing: border-box; /* Include padding in height calculation */
+}
+
+h1 {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    color: #3498db;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    animation: textPop 1s ease-out;
+    font-size: 2.2em;
+}
+
+/* Confetti Canvas - position: fixed ensures it doesn't affect layout */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.mode-selection {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.mode-selection h2 {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    color: #bdc3c7;
+}
+
+.mode-button {
+    background-color: #7f8c8d;
+    color: white;
+    padding: 8px 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0 5px;
+}
+
+.mode-button:hover {
+    background-color: #95a5a6;
+    transform: translateY(-2px);
+}
+
+.mode-button.active {
+    background-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.7);
+}
+
+.player-names {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.name-input {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.name-input label {
+    font-size: 0.9em;
+    margin-bottom: 3px;
+    color: #bdc3c7;
+}
+
+.name-input input[type="text"] {
+    padding: 6px 10px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    border: 1px solid #34495e;
+    background-color: #4a627d;
+    color: #ecf0f1;
+    width: 100px;
+    max-width: 120px;
+    box-sizing: border-box;
+}
+
+.game-options {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #bdc3c7;
+}
+
+.game-options label {
+    font-size: 1em;
+}
+
+.game-options select {
+    padding: 6px 10px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    border: 1px solid #34495e;
+    background-color: #4a627d;
+    color: #ecf0f1;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23bdc3c7%22%20d%3D%22M287%2C197.8L146.2%2C57c-1.8-1.8-4.6-1-6.4%2C0l-140.8%2C140.8c-1.8%2C1.8-1.8%2C4.6%2C0%2C6.4s4.6%2C1.8%2C6.4%2C0L143%2C70c1.8-1.8%2C4.6-1.8%2C6.4%2C0l134.2%2C134.2c1.8%2C1.8%2C4.6%2C1.8%2C6.4%2C0S288.8%2C199.6%2C287%2C197.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 10px;
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-around;
+    width: 320px;
+    background-color: #34495e;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
+.score {
+    text-align: center;
+}
+
+.score p {
+    margin: 0;
+    font-size: 1em;
+    color: #bdc3c7;
+}
+
+.score span {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    color: #e74c3c;
+    margin-top: 5px;
+}
+
+.choices-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.player-choices {
+    background-color: #34495e;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    min-width: 180px;
+}
+
+.player-choices h2 {
+    margin-top: 0;
+    color: #bdc3c7;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.choice-button {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin: 4px;
+}
+
+.choice-button:hover:not(:disabled) {
+    background-color: #2ecc71;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.choice-button:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #229954;
+}
+
+.choice-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #555;
+    transform: none;
+    box-shadow: none;
+}
+
+.choice-button.selected {
+    border: 3px solid #ffeb3b;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 235, 59, 0.5);
+}
+
+.player-choices.active-player {
+    border: 3px solid #f39c12;
+}
+
+.display-area {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 10px; /* Reduced margin, making space for absolute message */
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.display-choice {
+    background-color: #34495e;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    min-width: 120px;
+}
+
+.display-choice h2 {
+    margin-top: 0;
+    color: #bdc3c7;
+    font-size: 1.1em;
+}
+
+.choice-icon {
+    font-size: 3.5em;
+    display: inline-block;
+    animation: pulse 0.8s infinite alternate;
+}
+
+.choice-icon.animate-in {
+    animation: revealChoice 0.5s ease-out forwards;
+}
+
+/* ABSOLUTE POSITIONING FOR ROUND RESULT MESSAGE */
+#round-result-message {
+    position: absolute; /* Position relative to the body */
+    top: 50%; /* Start roughly in the middle vertically */
+    left: 50%; /* Start roughly in the middle horizontally */
+    transform: translate(-50%, -50%); /* Center it perfectly */
+    z-index: 10; /* Ensure it's above other elements but below confetti */
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    min-height: 40px; /* Ensure space for text */
+    width: 80%; /* Give it some width to center text */
+    pointer-events: none; /* Allows clicks to pass through */
+}
+
+#game-winner-message {
+    font-size: 2em; /* Adjusted to fit better */
+    font-weight: bold;
+    color: #ffeb3b;
+    text-shadow: 0 0 10px rgba(255, 235, 59, 0.7);
+    margin-top: 8px;
+    min-height: 40px; /* Adjusted min-height */
+    animation: fadeInScale 1s ease-out;
+    text-align: center;
+    width: 100%; /* Ensure it takes full width to center text */
+}
+
+.round-win-animation {
+    color: #2ecc71;
+    animation: bounceIn 0.7s ease-out;
+}
+
+.round-lose-animation {
+    color: #e74c3c;
+    animation: shake 0.5s ease-out;
+}
+
+.round-draw-animation {
+    color: #f1c40f;
+    animation: pulse 0.8s infinite alternate;
+}
+
+/* ABSOLUTE POSITIONING FOR GAME CONTROLS (RESET/PLAY AGAIN) */
+.game-controls {
+    position: absolute; /* Position relative to the body */
+    bottom: 20px; /* 20px from the bottom */
+    right: 20px; /* 20px from the right */
+    display: flex;
+    gap: 15px;
+    z-index: 5; /* Ensure it's above normal content */
+}
+
+#reset-button, #play-again-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #e67e22;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#reset-button:hover, #play-again-button:hover {
+    background-color: #f39c12;
+    transform: translateY(-3px);
+}
+
+/* Media Queries for very small screens (e.g., small phones in portrait) */
+@media (max-height: 600px), (max-width: 600px) {
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+    }
+    .mode-button {
+        padding: 6px 10px;
+        font-size: 0.9em;
+    }
+    .player-names, .game-options, .score-board, .choices-container, .display-area {
+        margin-bottom: 10px; /* Further reduce margins */
+        gap: 10px; /* Further reduce gaps */
+    }
+    .score span {
+        font-size: 1.8em; /* Smaller scores */
+    }
+    .player-choices h2, .display-choice h2 {
+        font-size: 1em;
+    }
+    .choice-button {
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+    .choice-icon {
+        font-size: 3em;
+    }
+    #round-result-message {
+        font-size: 1.4em;
+        top: 45%; /* Adjust position slightly */
+    }
+    #game-winner-message {
+        font-size: 1.8em;
+    }
+    #reset-button, #play-again-button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
